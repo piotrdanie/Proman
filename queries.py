@@ -36,7 +36,7 @@ def get_boards():
 
 def get_cards_for_board(board_id):
     # remove this code once you implement the database
-    return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
+    # return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
 
     matching_cards = data_manager.execute_select(
         """
@@ -47,3 +47,13 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+
+def add_user(user_name,email,password,registration_time):
+    data_manager.execute_select( 
+                """
+                INSERT into 
+                users (user_name, email, password, registration_time)
+                values 
+                (%(user_name)s, %(email)s, %(password)s, %(registration_time)s)"""
+                , {'user_name': user_name, 'email': email, 'password':password, 'registration_time': registration_time})

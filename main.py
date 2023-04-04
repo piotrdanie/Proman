@@ -1,11 +1,16 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect, flash
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
 import queries
+import util
+import bcrypt
+import re
+from os import urandom
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
+app.secret_key = urandom(24)
 load_dotenv()
 
 @app.route("/")
@@ -14,6 +19,30 @@ def index():
     This is a one-pager which shows all the boards and cards
     """
     return render_template('index.html')
+
+@app.route('/registration', methods=["GET", "POST"])
+def registration():
+    if request.method == 'GET':
+        return render_template('registration.html')
+    else:
+        user_name = request.form.get('user_name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+        password_hash = util.hash_password(password)
+        registration_time = util.get_current_time()
+        if password != confirm_password:
+            flash("Passwords do not match!")
+            return render_template('registration.html', error = 'Passwords do not match')
+        else:
+            password_hash = util.hash_password(password)
+
+        if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',email):
+            flash("Username already exists, please choose another one!")
+            return render_template('registration.html', error = 'Invalid email address')
+        else:
+            queries.add_user(user_name, email, password_hash,registration_time)
+            return redirect(url_for('index'))
 
 
 @app.route("/api/boards")

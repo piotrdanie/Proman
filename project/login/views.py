@@ -16,7 +16,7 @@ def login():
         email = request.form.get('email')
         user_data = queries.user_data(email)
         if queries.user_data(email) and \
-        util.verify_password(request.form['password'], user_data['password']):
+                util.verify_password(request.form['password'], user_data['password']):
             session['email'] = email
             session['user_id'] = user_data['id']
             session['user_name'] = user_data['user_name']
@@ -27,12 +27,11 @@ def login():
     else:
         return render_template('login/login.html')
 
+
 @login_bp.route('/logout')
 def logout():
     session.pop('email', None)
     session.pop('user_id', None)
-    session.pop('user_name',None)
+    session.pop('user_name', None)
 
     return redirect(url_for('app.index'))
-
-

@@ -59,15 +59,20 @@ def execute_select(statement, variables=None, fetchall=True):
             result_set = cursor.fetchall() if fetchall else cursor.fetchone()
     return result_set
 
+
 def execute_insert(statement, variables=None):
     """
-    Execute SELECT statement optionally parameterized.
-    Use fetchall=False to get back one value (fetchone)
-
+    Execute INSERT statement optionally parameterized.
+    
     Example:
-"""
+     > execute_select('INSERT INTO ... () values (%()s), {'key':value})
+    statement: insert statement
+    variables:  optional parameter dict"""
+
+
     with establish_connection() as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
             cursor.execute(statement, variables)
-
+            # insertId = cursor.fetchone()
+            # return insertId
 

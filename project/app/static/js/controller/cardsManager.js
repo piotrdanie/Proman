@@ -26,9 +26,13 @@ export let cardsManager = {
     createCard: async function () {
         console.log("print something modal works")
         let titleField = document.querySelector("input#title-card");
-        console.log(titleField);
+        let inputText = document.getElementsByClassName("input-group mb-3")
+        console.log(titleField)
+        console.log(inputText)
         let title = titleField.value;
+        let titleInput = inputText.value
         console.log("text from field: " + title);
+        console.log("text from input: " + titleInput);
         let columnId = document.querySelector('.col-sm-4[data-column-id]').getAttribute('data-column-id');
         console.log("patrz tuuuu" + columnId)
         cardsHandler.createNewCard(title, columnId);

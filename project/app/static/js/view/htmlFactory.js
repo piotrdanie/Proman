@@ -24,7 +24,13 @@ export function htmlFactory(template) {
 
 function columnBuilder(column, isFirst) {
 
-    const buttonaddCard = isFirst == true ? `<a href="#" class="btn btn-primary m-3" id="new-card" data-toggle="modal" data-target="#addCardModal" type="button" align="right" data-board-id="${column.id}">
+    const buttonaddCard = isFirst == true ? `                                <div class="input-group mb-3">
+    <input type="text" class="form-control" id="title-card" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"></input>
+    <div class="input-group-append">
+        <button type="button" class="btn btn-primary" id="save-card">Button</button>
+    </div>
+</div>
+    <a href="#" class="btn btn-primary m-3" id="new-card" data-toggle="modal" data-target="#addCardModal" type="button" align="right" data-board-id="${column.id}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
                                             <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
                                             <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
@@ -44,15 +50,16 @@ function columnBuilder(column, isFirst) {
                             </div>
                             <div class="col-sm-3 div-button" data-board-id="${column.id}">
                             ${buttonaddCard} 
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button">Button</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="card-body" id="cards" data-column-id="${column.id}"></div>
+                        <form class="form-inline">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <label for="inputPassword2" class="sr-only">Password</label>
+                                <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
+                            </form>
                     </div>
                 </div>
             `;

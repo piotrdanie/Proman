@@ -24,7 +24,7 @@ export let columnManager = {
         }
         // // addNewColumnButton
         const columnBuilder = htmlFactory(htmlTemplates.addColumn);
-        const content = columnBuilder();
+        const content = columnBuilder(clumnId);
         domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
     }
 }

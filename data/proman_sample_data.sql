@@ -36,7 +36,7 @@ CREATE TABLE boards (
 
 CREATE TABLE columns (
     id          SERIAL PRIMARY KEY  NOT NULL,
-    board_id    INTEGER       REFERENCES columns(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    board_id    INTEGER       REFERENCES boards(id) ON DELETE CASCADE ON UPDATE CASCADE,
     title       VARCHAR (200)       NOT NULL,
     column_order  INTEGER           NOT NULL
 );

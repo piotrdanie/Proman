@@ -21,6 +21,6 @@ export let cardsHandler = {
     },
     updateColumnIdInCard: async function (cardId, columnId) {
         // 
-        return await dataCRUD.apiPost(`/api/boards/columns/${columnId}/cards/${cardId}/edit`, {"columnId": columnId});
+        return await dataCRUD.apiPatch(`/api/boards/columns/${columnId}/cards/${cardId}`);
     },
 }

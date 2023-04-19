@@ -8,4 +8,8 @@ export let columnsHandler = {
         // delete column
         return await dataCRUD.apiDelete(`/api/boards/columns/${columnId}`);
     },
+    updataColumn: async function (boardId, columnId, newColumnTitle){
+        // edit board data
+        return await dataCRUD.apiPost(`/api/boards/${boardId}/columns/${columnId}/updata`, {"title": newColumnTitle});
+    },
 }

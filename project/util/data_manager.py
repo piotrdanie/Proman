@@ -60,7 +60,7 @@ def execute_select(statement, variables=None, fetchall=True):
     return result_set
 
 
-def execute_insert(statement, variables=None):
+def execute_insert(statement, variables=None, fetchall=True):
     """
     Execute INSERT statement optionally parameterized.
     
@@ -69,10 +69,8 @@ def execute_insert(statement, variables=None):
     statement: insert statement
     variables:  optional parameter dict"""
 
-
     with establish_connection() as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
             cursor.execute(statement, variables)
-            # insertId = cursor.fetchone()
-            # return insertId
+
 

@@ -26,7 +26,13 @@ export let dragManager = {
         containers.forEach(container => {
             container.addEventListener('dragover', async e => {
                 e.preventDefault()
-                const afterElement = this.getDragAfterElement(container, e.clientY)
+                const afterElement = getDragAfterElement(container, e.clientY)
+
+                // there is the element 
+                console.log("after element: " + afterElement);
+                console.log(afterElement)
+                
+                
                 const draggable = document.querySelector('.dragging')
 
                 if (afterElement == null){
@@ -48,22 +54,21 @@ export let dragManager = {
         })
 
         
-    },
-    getDragAfterElement: function(container, y) {
-        const draggableElements = [...container.querySelectorAll('.card-m-2:not(.dragging)')]
-
-        return draggableElements.reduce((closest, child)=> {
-            const box = child.getBoundingClientRect()
-            const offset = y - box.top - box.height / 2
-            console.log(box)
-            if (offset < 0 && offset > closest.offset){
-                return {offset: offset, element: child}
-            }
-            else {
-                return closest
-            }
-        }, {offset: Number.NEGATIVE_INFINITY}.element)
     }
+}
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.card-draggable:not(.dragging)')]
+
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect()
+    const offset = y - box.top - box.height / 2
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child }
+    } else {
+      return closest
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element
 }
 
     

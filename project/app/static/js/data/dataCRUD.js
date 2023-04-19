@@ -31,10 +31,38 @@ export let dataCRUD = {
             console.error(`An error occurred while making DELETE request to ${url}:`, error);
         }   
     },
-    apiPut: async function (url) {
-        // function for send PUT request at specified endpoint in url
+
+    apiPut: async function (url, payload) {
+        try {
+            let response = await fetch(url, {
+                method: 'PUT',
+                body: JSON.stringify(payload),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (error) {
+            console.error(`An error occurred while making PUT request to ${url}:`, error);
+        }
     },
+
     apiPatch: async function (url) {
-        // function for sending PATCH request at specified endpoint in url
+        try {
+            let response = await fetch(url, {
+                method: 'PATCH',
+                body: JSON.stringify(payload),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (error) {
+            console.error(`An error occurred while making PATCH request to ${url}:`, error);
+        }
     },
 }

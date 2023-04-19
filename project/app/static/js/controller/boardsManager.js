@@ -1,13 +1,12 @@
 import { boardsHandler } from "../data/boardsHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
-import { columnManager } from "./columnManager.js";
-import { dragManager } from "./dragManager.js";
 import { refreshManager } from "./refreshManager.js";
+import { boardsManagerFunc } from "./boardsManagerFunc.js";
 
 
 export let boardsManager = {
-    loadBoards: async function (userId, openBoardId) {
+    loadBoards: async function (userId) {
         console.log("get user id from flask: " + userId);
         const boards = await boardsHandler.getBoards();
         for (let board of boards) {
@@ -18,24 +17,19 @@ export let boardsManager = {
                 domManager.addChild("#root", content);
                 domManager.addEventListener(
                     `button[data-board-id="${board.id}"]`,
-                    //`.toggle-board-button[data-board-id="${board.id}"]`,
                     "click",
-                    showHideButtonHandler
+                    boardsManagerFunc.showHideButtonHandler
                 );
                 domManager.addEventListener(
-                    `h5#board-header[data-board-id="${board.id}"]`,
-                    //`.toggle-board-button[data-board-id="${board.id}"]`,
-                    "input",
-                    changeText
+                    `[data-board-id="${board.id}"].card-header-title--editable`,
+                    "keypress",
+                    boardsManagerFunc.editBoardTilte
                 );
                 domManager.addEventListener(
                     `div.div-button[data-board-id="${board.id}"]`,
                     "click",
-                    deleteBoardButton
-                ) 
-
-                openStaysOpen(openBoardId, board.id);
-
+                    boardsManagerFunc.deleteBoardButton
+                );
             }; 
         }
     },
@@ -53,62 +47,3 @@ export let boardsManager = {
         await boardsManager.loadBoards(null, openBoardId);
     },
 };
-
-async function showHideButtonHandler(clickEvent) {
-    const boardId = await clickEvent.currentTarget.dataset.boardId;
-    const currentTargetElement = await clickEvent.currentTarget;
-    const boardElement = document.querySelector(`#div-cards[data-board-id="${boardId}"]`)
-
-    if (currentTargetElement.classList.contains("open")){
-        hideAllBoard(currentTargetElement, boardElement);
-    } else {
-        await showAllBoard(currentTargetElement, boardElement, boardId);
-    }   
-}
-
-async function changeText(changeEvent) {
-    const elementHTML = await changeEvent.currentTarget;
-    console.log(elementHTML)
-}
-
-function hideAllBoard(currentTargetElement, boardElement) {
-    domManager.changeBetweenCSSClasses(currentTargetElement, "open", "closed");
-    domManager.changeBetweenCSSClasses(boardElement, "height-500", "height-0");
-    boardElement.innerHTML = "";
-}
-
-async function showAllBoard(currentTargetElement, boardElement, boardId) {
-    domManager.changeBetweenCSSClasses(currentTargetElement, "closed", "open");
-    domManager.changeBetweenCSSClasses(boardElement, "height-0", "height-500");
-    await columnManager.loadColumn(boardId);
-    dragManager.initDragManager();
-}
-
-async function openStaysOpen(openBoardId, boardId) {
-    const boardElement = document.querySelector(`#div-cards[data-board-id="${boardId}"]`)
-    const currentTargetElement = document.querySelector(`button[data-board-id="${boardId}"]`)
-
-    if (openBoardId != null) {
-        console.log("open boards id: " + openBoardId)
-        console.log(openBoardId);
-        console.log("board id:       " + boardId)
-        if (openBoardId.includes(`${boardId}`)) {
-            console.log("yes includes")
-            await showAllBoard(currentTargetElement, boardElement, boardId);
-        }
-    }
-}
-
-async function deleteBoardButton(clickEvent) {
-    // var columnId = clickEvent.curentTarget.dataset.columnId
-    let boardId = await clickEvent.currentTarget.dataset.boardId
-    console.log("delete board: "+ boardId)
-    await boardsHandler.deleteBoard(boardId)
-
-
-    let boardElement = document.querySelector(`.full-board[data-board-id="${boardId}"]`)
-    boardElement.remove()
-
-    domManager.emptyElement('#root');
-    await boardsManager.loadBoards(null)
-}

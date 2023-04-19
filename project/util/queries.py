@@ -65,12 +65,13 @@ def add_column(board_id, title, column_order):
 
 
 def add_card(column_id, title, card_order):
-    data_manager.execute_insert( 
+    return data_manager.execute_select( 
                 """
                 INSERT into 
                 cards (column_id, title, card_order)
                 values 
-                (%(column_id)s, %(title)s, %(card_order)s)"""
+                (%(column_id)s, %(title)s, %(card_order)s)
+                RETURNING cards.id"""
                 , {'column_id': column_id, 'title': title, 'card_order': card_order})
 
 
@@ -80,8 +81,7 @@ def delete_card(id):
         DELETE from cards
         WHERE id = %(id)s
         """
-        , {'id':id}
-    )
+        , {'id':id})
 
 def delete_column(id):
     data_manager.execute_insert(
@@ -89,8 +89,7 @@ def delete_column(id):
         DELETE from columns
         WHERE id = %(id)s
         """
-        , {'id':id}
-    )
+        , {'id':id})
 
 def delete_board(id):
     data_manager.execute_insert(
@@ -101,21 +100,32 @@ def delete_board(id):
         DELETE from boards
         WHERE id = %(id)s
         """
-        , {'id':id}
-    )
+        , {'id':id})
 
-# def delete(table_name,id):
-#     select = f'''
-#         DELETE from {table_name}
-#         WHERE id = {id}
-#         '''
-#     return data_manager.execute_insert(select)
 
-def edit(column_id, card_id):
+def updata_board(id, new_title):
+    select = f'''
+    UPDATE boards SET
+    title = '{new_title}'
+    WHERE id = {id}
+    '''
+    return data_manager.execute_insert(select)
+
+
+def updata_column(id, new_title):
+    select = f'''
+    UPDATE columns SET
+    title = '{new_title}'
+    WHERE id = {id}
+    '''
+    return data_manager.execute_insert(select)
+
+
+def switch_columnId(column_id, card_id):
     select = f'''
         UPDATE cards SET
         column_id = {column_id}
         WHERE id = {card_id}
         '''
-    return data_manager.execute_insert(select)
+    data_manager.execute_insert(select) 
 

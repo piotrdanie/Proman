@@ -22,6 +22,11 @@ export let cardsManager = {
                 "click",
                 deleteCardButton
             );
+            domManager.addEventListener(
+                `.add-card-button[data-column-id="${columnId}"]`,
+                "click",
+                addCardButton
+            );
     },
     createCard: async function () {
         console.log("print something modal works")
@@ -37,9 +42,6 @@ export let cardsManager = {
         console.log("patrz tuuuu" + columnId)
         cardsHandler.createNewCard(title, columnId);
 
-        // get id from request after posting
-        //await cardsHandler.getCard()
-        //this.loadCard(columnId, )
     },
 };
 
@@ -52,4 +54,14 @@ async function deleteCardButton(clickEvent) {
     // remove element from column in view
     let cardElement = document.querySelector(`.card-draggable[data-card-id="${cardId}"]`)
     cardElement.remove()
+}
+
+
+async function addCardButton(clickEvent) {
+    let columnId = await clickEvent.currentTarget.dataset.columnId
+    let cardTitle = document.querySelector(`.add-card-imput[data-column-id="${columnId}"]`).value
+    let cardId = await cardsHandler.createNewCard(cardTitle, columnId)
+
+    let cardPromise = await cardId;
+    console.log(cardPromise) 
 }

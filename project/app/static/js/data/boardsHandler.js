@@ -19,6 +19,11 @@ export let boardsHandler = {
     },
     updataBoard: async function (boardId, newBoardTitle){
         // edit board data
-        return await dataCRUD.apiPost(`/api/boards/${boardId}/updata`, {"title": newBoardTitle});
+        return await dataCRUD.apiPut(
+            `/api/boards/${boardId}/updata`, 
+            {
+                "id": boardId,
+                "title": newBoardTitle
+            });
     },
 }

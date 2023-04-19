@@ -40,12 +40,25 @@ async function deleteColumnButton(clickEvent) {
 }
 
 async function updataColumnTilte(event) {
+<<<<<<< HEAD
     let columnId = await event.currentTarget.dataset.columnId
+=======
+    let columnElement = await event.currentTarget
+    let columnId = columnElement.dataset.columnId
+
+>>>>>>> development
         if (event.keyCode === 13) {
             event.preventDefault();
 
+<<<<<<< HEAD
             let newColumnTitle = document.querySelector(`[data-column-id="${columnId}"].column-header-title--editable`).innerText;
             await columnsHandler.updataColumn(columnId,newColumnTitle)
+=======
+    // Odbieranie focusu z pola edycji tytułu
+            let newColumnTitle = columnElement.innerText;
+            await columnsHandler.updataColumn(columnId,newColumnTitle)
+            columnElement.setAttribute("contenteditable", "false");
+>>>>>>> development
         }
 
 }

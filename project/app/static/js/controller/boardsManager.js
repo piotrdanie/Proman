@@ -30,6 +30,11 @@ export let boardsManager = {
                     "click",
                     boardsManagerFunc.deleteBoardButton
                 );
+                domManager.addEventListener(
+                    `[data-board-id="${board.id}"].card-header-title--editable`,
+                    "click",
+                    boardsManagerFunc.changeElementEdit
+                )
             }; 
         }
     },

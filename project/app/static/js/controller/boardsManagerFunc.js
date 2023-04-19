@@ -57,7 +57,7 @@ export let boardsManagerFunc = {
         domManager.emptyElement('#root');
         await boardsManager.loadBoards(null)
     },
-        // Funkcja obsługująca zatwierdzanie edycji za pomocą klawisza Enter
+    // Funkcja obsługująca zatwierdzanie edycji za pomocą klawisza Enter
     editBoardTilte: async function (event) {
         let boardId = await event.currentTarget.dataset.boardId
         // Sprawdzenie, czy naciśnięty klawisz to Enter (kod 13)
@@ -67,11 +67,19 @@ export let boardsManagerFunc = {
                 event.preventDefault();
 
         // Odbieranie focusu z pola edycji tytułu
-                let newBoardTitle = document.querySelector(`[data-board-id="${boardId}"].card-header-title--editable`).innerText; 
+                let newBoardTitleElement = document.querySelector(`[data-board-id="${boardId}"].card-header-title--editable`)
+                let newBoardTitle = newBoardTitleElement.innerText; 
                 await boardsHandler.updataBoard(boardId,newBoardTitle)
+                newBoardTitleElement.setAttribute("contenteditable", "false");
+                newBoardTitleElement.innerText = newBoardTitle;
             }
-        
         // domManager.emptyElement('#root');
         // await boardsManager.loadBoards(null)
     },
+    changeElementEdit: async function (event) {
+        let boardId = await event.currentTarget
+        console.log(boardId)
+        boardId.setAttribute("contenteditable", "true")
+        boardId.focus()
+    }
 }

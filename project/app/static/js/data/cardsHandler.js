@@ -19,9 +19,16 @@ export let cardsHandler = {
         // delete card
         return await dataCRUD.apiDelete(`/api/boards/columns/cards/${cardId}`);
     },
-    updateColumnIdInCard: async function (cardId, columnId) {
+    updateColumnIdInCard: async function (cardId, columnId, cardOrder) {
         // 
-        return await dataCRUD.apiPatch(`/api/boards/columns/${columnId}/cards/${cardId}`);
+        return await dataCRUD.apiPatch(
+            `/api/boards/columns/cards/`,
+            {
+                "id": cardId,
+                "column_id": columnId,
+                "card_order": cardOrder,
+            }
+            );
     },
     updataCard: async function (columnId, cardId, newCardTitle){
         // edit board data

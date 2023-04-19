@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS boards_types;
 
 CREATE TABLE boards (
     id          SERIAL PRIMARY KEY  NOT NULL,
-    title       VARCHAR(200)        NOT NULL,
+    title       VARCHAR(500)        NOT NULL,
     user_id     INTEGER,
     type        INTEGER             NOT NULL default 1    
 );
@@ -37,14 +37,14 @@ CREATE TABLE boards (
 CREATE TABLE columns (
     id          SERIAL PRIMARY KEY  NOT NULL,
     board_id    INTEGER       REFERENCES boards(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    title       VARCHAR (200)       NOT NULL,
+    title       VARCHAR (500)       NOT NULL,
     column_order  INTEGER           NOT NULL
 );
 
 CREATE TABLE cards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     column_id   INTEGER       REFERENCES columns(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    title       VARCHAR (200)       NOT NULL,
+    title       VARCHAR (500)       NOT NULL,
     card_order  INTEGER             NOT NULL
 );
 

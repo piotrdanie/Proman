@@ -10,7 +10,7 @@ def get_boards():
     """
     All the boards
     """
-    return queries.get_everything('boards')
+    return queries.get_table_order_by_element("boards", "id")
 
 @api_board_bp.route("/boards/<int:board_id>/", methods=["GET"])
 @json_response
@@ -29,10 +29,19 @@ def create_board():
 def delete_board(board_id: int):
     return queries.delete_board(board_id)
 
+<<<<<<< HEAD
 
 @api_board_bp.route("/boards/<int:board_id>/updata", methods=["POST"])
 @json_response
 def updata_board(board_id: int):
     board_title = request.get_json()["title"]
     queries.updata_title('boards',board_id,board_title)
+=======
+@api_board_bp.route("/boards/<int:board_id>/updata", methods=["PUT"])
+@json_response
+def updata_board(board_id: int):
+    print(request.json)
+    board_title = request.json["title"]
+    queries.updata_board(board_id,board_title)
+>>>>>>> development
     return {"title": board_title, "http_code": 201}

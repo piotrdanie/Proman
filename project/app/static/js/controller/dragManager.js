@@ -1,4 +1,5 @@
 import { cardsHandler } from "../data/cardsHandler.js";
+import { columnManager } from "./columnManager.js";
 
 
 export let dragManager = {
@@ -48,8 +49,15 @@ export let dragManager = {
                 const draggable = document.querySelector('.dragging')
                 let columnId = container.dataset.columnId
                 let cardId = draggable.dataset.cardId
+                let cardOrder = draggable.dataset.cardOrder
                 console.log('order: '+draggable.dataset.cardOrder)
-                await cardsHandler.updateColumnIdInCard(cardId,columnId)
+                await cardsHandler.updateColumnIdInCard(cardId,columnId, cardOrder)
+
+                let boardElement = document.querySelector(`#div-cards[data-board-id="1"]`);
+                boardElement.innerHTML = ""
+                await columnManager.loadColumn(1);
+                dragManager.initDragManager();
+
             })
         })
 

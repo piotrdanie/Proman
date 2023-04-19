@@ -27,13 +27,13 @@ def create_column():
 @api_board_bp.route("/boards/columns/<int:column_id>", methods=["DELETE"])
 @json_response
 def delete_column(column_id: int):
-    # return queries.delete(column_id)
+    
     return queries.delete_column(column_id)
 
 
-@api_board_bp.route("/boards/<int:board_id>/columns/<int:column_id>/updata", methods=["POST"])
+@api_board_bp.route("/boards/columns/<int:column_id>/updata", methods=["POST"])
 @json_response
-def updata_column(board_id,column_id):
+def updata_column(column_id):
     column_title = request.get_json()["title"]
-    queries.updata_column(board_id, column_id,column_title)
+    queries.updata_column(column_id,column_title)
     return {"title": column_title, "http_code": 201}

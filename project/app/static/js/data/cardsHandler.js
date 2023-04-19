@@ -23,4 +23,8 @@ export let cardsHandler = {
         // 
         return await dataCRUD.apiPatch(`/api/boards/columns/${columnId}/cards/${cardId}`);
     },
+    updataCard: async function (columnId, cardId, newCardTitle){
+        // edit board data
+        return await dataCRUD.apiPost(`/api/boards/columns/${columnId}/cards/${cardId}/updata`, {"title": newCardTitle});
+    },
 }

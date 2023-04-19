@@ -51,3 +51,11 @@ def delete_card(card_id: int):
 def swich_columnId(card_id, column_id):
     queries.switch_columnId(column_id, card_id)
     return {"id": card_id, "http_code": 201} 
+
+@api_board_bp.route("/boards/columns/<int:column_id>/cards/<int:card_id>/updata", methods=["POST"])
+@json_response
+def updata_card_title(column_id, card_id):
+    column_id = column_id
+    card_title = request.get_json()["title"]
+    queries.updata_title('cards',card_id, card_title)
+    return {"title": card_title, "http_code": 201}

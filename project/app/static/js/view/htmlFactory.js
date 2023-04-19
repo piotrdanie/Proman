@@ -101,7 +101,9 @@ function cardBuilder(card) {
     return `<div class="card m-2 card-draggable" data-card-id="${card.id}" data-card-order="${card.card_order}" draggable="true" style="cursor: move;">
                 <div class="row card-header m-0">    
                     <div class="col-sm-9">
-                        <h5>${card.title}</h5>
+                        <form id="form-card-edit">
+                        <h5 class="card-header-title--editable" id="card-header" data-card-id="${card.id}" contenteditable="true">${card.title}</h5>    
+                        </form>
                     </div>
                         <div class="col-sm-3 div-button" data-card-id="${card.id}">
                         <button data-toggle="modal" type="button" class="btn btn-primary" >

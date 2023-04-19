@@ -103,22 +103,14 @@ def delete_board(id):
         , {'id':id})
 
 
-def updata_board(id, new_title):
+def updata_title(table_name, id, new_title):
     select = f'''
-    UPDATE boards SET
+    UPDATE {table_name} SET
     title = '{new_title}'
     WHERE id = {id}
     '''
     return data_manager.execute_insert(select)
 
-
-def updata_column(id, new_title):
-    select = f'''
-    UPDATE columns SET
-    title = '{new_title}'
-    WHERE id = {id}
-    '''
-    return data_manager.execute_insert(select)
 
 
 def switch_columnId(column_id, card_id):

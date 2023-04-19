@@ -27,6 +27,10 @@ export let cardsManager = {
                 "click",
                 addCardButton
             );
+            domManager.addEventListener(
+                `[data-card-id="${card.id}"].card-header-title--editable`,
+                "keypress",
+                updataCardTilte);
     },
     createCard: async function () {
         console.log("print something modal works")
@@ -41,7 +45,6 @@ export let cardsManager = {
         let columnId = document.querySelector('.col-sm-4[data-column-id]').getAttribute('data-column-id');
         console.log("patrz tuuuu" + columnId)
         cardsHandler.createNewCard(title, columnId);
-
     },
 };
 
@@ -64,4 +67,17 @@ async function addCardButton(clickEvent) {
 
     let cardPromise = await cardId;
     console.log(cardPromise) 
+}
+
+async function updataCardTilte(event) {
+    let columnId = document.querySelector('.col-sm-4[data-column-id]').getAttribute('data-column-id')
+    let cardId = await event.currentTarget.dataset.cardId
+
+        if (event.keyCode === 13) {
+            event.preventDefault();
+
+            let newCardTitle = document.querySelector(`[data-card-id="${cardId}"].card-header-title--editable`).innerText;
+            await cardsHandler.updataCard(columnId, cardId, newCardTitle);
+        }
+
 }

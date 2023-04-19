@@ -27,7 +27,7 @@ def create_column():
 @api_board_bp.route("/boards/columns/<int:column_id>", methods=["DELETE"])
 @json_response
 def delete_column(column_id: int):
-    
+
     return queries.delete_column(column_id)
 
 
@@ -35,5 +35,5 @@ def delete_column(column_id: int):
 @json_response
 def updata_column(column_id):
     column_title = request.get_json()["title"]
-    queries.updata_column(column_id,column_title)
+    queries.updata_title('columns',column_id,column_title)
     return {"title": column_title, "http_code": 201}

@@ -10,15 +10,11 @@ export let columnsHandler = {
     },
     updataColumn: async function (columnId, newColumnTitle){
         // edit board data
-<<<<<<< HEAD
-        return await dataCRUD.apiPost(`/api/boards/columns/${columnId}/updata`, {"title": newColumnTitle});
-=======
         return await dataCRUD.apiPut(
             `/api/boards/columns/`, 
             {
                 "title": newColumnTitle,
                 "id": columnId
             });
->>>>>>> development
     },
 }

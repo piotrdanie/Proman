@@ -48,7 +48,6 @@ def delete_card(card_id: int):
 
 @api_board_bp.route("/boards/columns/cards/", methods=["PATCH"])
 @json_response
-<<<<<<< HEAD
 def swich_columnId(card_id, column_id):
     queries.switch_columnId(column_id, card_id)
     return {"id": card_id, "http_code": 201} 
@@ -60,12 +59,3 @@ def updata_card_title(column_id, card_id):
     card_title = request.get_json()["title"]
     queries.updata_title('cards',card_id, card_title)
     return {"title": card_title, "http_code": 201}
-=======
-def swich_columnId():
-    column_id = request.json["column_id"]
-    card_id = request.json["id"]
-    card_order = request.json["card_order"]
-
-    queries.switch_columnId(column_id, card_id, card_order)
-    return {"id": card_id, "http_code": 201} 
->>>>>>> development

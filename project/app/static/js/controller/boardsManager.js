@@ -58,8 +58,13 @@ export let boardsManager = {
             console.log("userId: " + userId);
             let titleField = document.querySelector("input#title-board");
             let title = titleField.value;
-            let boardStatus = document.querySelector("#board-status").checked;
+            let privateChecked = document.querySelector("#board-status").checked;
+            let boardStatus = 1
+            if (privateChecked){
+                boardStatus = 2
+            }
             let boardResponse = boardsHandler.createNewBoard(title, boardStatus, userId);
+            
             boardsManagerFunc.getBoardAfterCreate(boardResponse, userId)
 
         } else {

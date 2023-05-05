@@ -23,7 +23,7 @@ insert_data.add_10_users()
 
 
 def main():
-    app.run(debug=True)  
+    app.run(debug=True, port=5002)  
 
     # Serving the favicon
     with app.app_context():

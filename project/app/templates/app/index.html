@@ -1,0 +1,26 @@
+{% extends 'app/layout.html' %}
+
+        
+        {% block content %}
+            {% include 'app/modal/modal-add-board.html' %}
+            {% include 'app/modal/modal-add-column.html' %}
+            {% include 'app/modal/modal-confirm-delete.html' %}
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                        <ul>
+                    {% for message in messages %}
+                        <li class="alert">{{ message }}</li>
+                    {% endfor %}
+                        </ul>
+                {% endif %}
+            {% endwith %}
+            
+            <a href="#" class="btn btn-primary m-3" id="new-board" data-toggle="modal" data-target="#addBoardModal">Create new board</a>
+            <div id="root"></div>
+         
+
+        {% endblock %}
+
+    </body>
+</html>
